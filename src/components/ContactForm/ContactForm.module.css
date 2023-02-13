@@ -1,0 +1,27 @@
+form{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 400px;
+    padding: 20px;
+}
+
+.form__Btn{
+    width: 100px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+.form__Label{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+}
+
+.form__Label input{
+    margin-top: 5px;
+    width: 250px;
+}
