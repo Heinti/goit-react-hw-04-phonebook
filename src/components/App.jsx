@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -9,20 +9,17 @@ export const App = () => {
   const [filter, setFilter] = useState('');
 
   function getDataFromLocal() {
-
- 
     const localSt = localStorage.getItem('contacts');
-
-    console.log(localSt);
     const parseSt = JSON.parse(localSt);
-    console.log(parseSt);
+
     if (parseSt) {
-      return setContacts(parseSt);
+      return parseSt;
     }
     return [];
   }
 
   const addContactFormData = data => {
+    console.log(data)
     const newContact = { id: nanoid(), name: data.name, number: data.number };
 
     const findDouble = contacts.find(({ name }) => {
@@ -32,6 +29,7 @@ export const App = () => {
     if (findDouble) {
       return alert(`${findDouble.name} is already in contact`);
     }
+
     setContacts([...contacts, newContact]);
   };
 
@@ -42,24 +40,18 @@ export const App = () => {
   const filterContactData = e => {
     const filverValue = e.target.value;
     setFilter(filverValue);
+
   };
 
   const getvisibleContacts = () => {
-    // const toLowerCaseName = filter.toLowerCase();
-    // return setContacts(
-    //   contacts.filter(contact =>
-    //     contact.name.toLowerCase().includes(toLowerCaseName)
-    //   )
-    // );
+    const toLowerCaseName = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(toLowerCaseName)
+    );
   };
 
   useEffect(() => {
-    // if (prevState.contacts !== this.state.contacts) {
-    //   localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
-    // }
-
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
-    
   }, [contacts]);
 
   const visibleContacts = getvisibleContacts();
@@ -70,12 +62,16 @@ export const App = () => {
       <ContactForm onSubmit={addContactFormData} />
 
       <h2>Contacts</h2>
-      {/* <Filter onChange={filterContactData} value={filter} /> */}
+      <Filter onChange={filterContactData} value={filter} />
 
-      <ContactList data={contacts} onDelete={deleteContactFormData} />
+      <ContactList data={visibleContacts} onDelete={deleteContactFormData} />
     </div>
   );
 };
+
+
+
+//before hooks
 
 // export class App extends Component {
 //   state = {
