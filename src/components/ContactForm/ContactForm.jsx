@@ -9,7 +9,6 @@ export function ContactForm  ({onSubmit}) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
 
-
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit({name, number});
